@@ -4,14 +4,14 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
-    "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "turbo run check-types"
+    "lint": "turbo run lint"
   },
   "devDependencies": {
     "prettier": "^3.7.4",
     "turbo": "^2.6.3",
-    "typescript": "5.9.2"
+    "typescript": "5.9.2",
+    "vite": "^7.3.0",
+    "rollup": "^4.53.4"
   },
   "engines": {
     "node": ">=18"
@@ -20,5 +20,13 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "dependencies": {
+    "@hono/zod-validator": "^0.7.5",
+    "@tailwindcss/vite": "^4.1.18",
+    "@tanstack/react-query": "^5.90.12",
+    "hono": "^4.11.1",
+    "tailwindcss": "^4.1.18",
+    "zod": "^4.2.0"
+  }
 }
