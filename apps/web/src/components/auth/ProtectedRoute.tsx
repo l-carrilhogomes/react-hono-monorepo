@@ -24,6 +24,7 @@
 import { useEffect, type ReactNode } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { authClient } from "../../lib/auth-client";
+import { LoadingScreen } from "../ui/Spinner";
 
 /**
  * Props for ProtectedRoute component.
@@ -63,7 +64,7 @@ export function ProtectedRoute({
 
     // Show loading while checking authentication
     if (isPending) {
-        return <div>Loading...</div>;
+        return <LoadingScreen />;
     }
 
     // Not authenticated - will redirect
