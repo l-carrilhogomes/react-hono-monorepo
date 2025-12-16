@@ -9,12 +9,19 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as RegisterRouteImport } from './routes/register'
 import { Route as PostCommentRouteImport } from './routes/post-comment'
 import { Route as NotFoundRouteImport } from './routes/not-found'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as CommentIndexRouteImport } from './routes/comment/index'
 import { Route as CommentIdRouteImport } from './routes/comment/$id'
 
+const RegisterRoute = RegisterRouteImport.update({
+  id: '/register',
+  path: '/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PostCommentRoute = PostCommentRouteImport.update({
   id: '/post-comment',
   path: '/post-comment',
@@ -23,6 +30,11 @@ const PostCommentRoute = PostCommentRouteImport.update({
 const NotFoundRoute = NotFoundRouteImport.update({
   id: '/not-found',
   path: '/not-found',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -43,50 +55,81 @@ const CommentIdRoute = CommentIdRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
   '/not-found': typeof NotFoundRoute
   '/post-comment': typeof PostCommentRoute
+  '/register': typeof RegisterRoute
   '/comment/$id': typeof CommentIdRoute
   '/comment': typeof CommentIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
   '/not-found': typeof NotFoundRoute
   '/post-comment': typeof PostCommentRoute
+  '/register': typeof RegisterRoute
   '/comment/$id': typeof CommentIdRoute
   '/comment': typeof CommentIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/login': typeof LoginRoute
   '/not-found': typeof NotFoundRoute
   '/post-comment': typeof PostCommentRoute
+  '/register': typeof RegisterRoute
   '/comment/$id': typeof CommentIdRoute
   '/comment/': typeof CommentIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/not-found' | '/post-comment' | '/comment/$id' | '/comment'
+  fullPaths:
+    | '/'
+    | '/login'
+    | '/not-found'
+    | '/post-comment'
+    | '/register'
+    | '/comment/$id'
+    | '/comment'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/not-found' | '/post-comment' | '/comment/$id' | '/comment'
+  to:
+    | '/'
+    | '/login'
+    | '/not-found'
+    | '/post-comment'
+    | '/register'
+    | '/comment/$id'
+    | '/comment'
   id:
     | '__root__'
     | '/'
+    | '/login'
     | '/not-found'
     | '/post-comment'
+    | '/register'
     | '/comment/$id'
     | '/comment/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  LoginRoute: typeof LoginRoute
   NotFoundRoute: typeof NotFoundRoute
   PostCommentRoute: typeof PostCommentRoute
+  RegisterRoute: typeof RegisterRoute
   CommentIdRoute: typeof CommentIdRoute
   CommentIndexRoute: typeof CommentIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/register': {
+      id: '/register'
+      path: '/register'
+      fullPath: '/register'
+      preLoaderRoute: typeof RegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/post-comment': {
       id: '/post-comment'
       path: '/post-comment'
@@ -99,6 +142,13 @@ declare module '@tanstack/react-router' {
       path: '/not-found'
       fullPath: '/not-found'
       preLoaderRoute: typeof NotFoundRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -127,8 +177,10 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  LoginRoute: LoginRoute,
   NotFoundRoute: NotFoundRoute,
   PostCommentRoute: PostCommentRoute,
+  RegisterRoute: RegisterRoute,
   CommentIdRoute: CommentIdRoute,
   CommentIndexRoute: CommentIndexRoute,
 }
