@@ -31,7 +31,41 @@ A modern full-stack monorepo boilerplate using Hono for the API and React for th
 ### Prerequisites
 - [Bun](https://bun.sh/) >= 1.3.4
 - [Node.js](https://nodejs.org/) >= 18
-- [PostgreSQL](https://www.postgresql.org/) database
+- [Docker](https://www.docker.com/) (optional, for local PostgreSQL)
+
+### Database with Docker
+
+The project includes a `compose.yaml` file to easily spin up a local PostgreSQL database using Docker:
+
+```bash
+# Start PostgreSQL container
+docker compose up -d
+
+# Verify the container is running
+docker compose ps
+
+# Stop the container
+docker compose down
+
+# Stop and remove data (reset database)
+docker compose down -v
+```
+
+**Default configuration:**
+| Variable | Value |
+|----------|-------|
+| Host | `localhost` |
+| Port | `5432` |
+| User | `postgres` |
+| Password | `password` |
+| Database | `boilerplate_db` |
+
+Your `apps/api/.env` should contain:
+```env
+DATABASE_URL="postgresql://postgres:password@localhost:5432/boilerplate_db"
+```
+
+> **Note:** If you already have PostgreSQL installed locally or prefer a different setup, you can skip Docker and configure your own database connection in the `.env` file.
 
 ### Installation
 
