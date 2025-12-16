@@ -11,6 +11,7 @@ import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { commentsRoute } from "./modules/comment/comment.route";
 import { authRoute } from "./modules/auth/auth.route";
+import { logger } from "./lib/logger";
 
 const app = new Hono();
 
@@ -40,7 +41,7 @@ app.use(
  * In development, includes the error message; in production, hides details.
  */
 app.onError((err, c) => {
-  console.error(`[API Error] ${err.message}`, err.stack);
+  logger.error({ err, path: c.req.path, method: c.req.method }, "Unhandled error");
 
   const isDev = process.env.NODE_ENV !== "production";
 
