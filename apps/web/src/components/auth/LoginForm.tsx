@@ -83,7 +83,7 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
             {/* Email field */}
             <div>
                 <InputText

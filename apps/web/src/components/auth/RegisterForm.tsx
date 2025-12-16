@@ -85,7 +85,7 @@ export function RegisterForm({ onSuccess }: RegisterFormProps) {
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
             {/* Name field */}
             <div>
                 <InputText

@@ -26,10 +26,10 @@ export const Route = createFileRoute("/register")({
  */
 function RegisterPage() {
     return (
-        <div>
-            <h1>Register</h1>
+        <div className="flex flex-col items-center justify-center h-screen">
+            <h1 className="text-2xl font-bold mb-6">Register</h1>
             <RegisterForm />
-            <p>
+            <p className="mt-4">
                 Already have an account? <Link to="/login">Login</Link>
             </p>
         </div>
