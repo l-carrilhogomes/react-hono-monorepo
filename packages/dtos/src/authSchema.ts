@@ -24,7 +24,7 @@ import { z } from "zod";
  */
 export const SignUpSchema = z.object({
     /** User's email address - must be valid email format */
-    email: z.string().email("Invalid email address"),
+    email: z.email("Invalid email address"),
     /** User's password - minimum 8 characters for security */
     password: z.string().min(8, "Password must be at least 8 characters"),
     /** User's display name - cannot be empty */
@@ -55,7 +55,7 @@ export type SignUpDto = z.infer<typeof SignUpSchema>;
  */
 export const SignInSchema = z.object({
     /** User's email address - must be valid email format */
-    email: z.string().email("Invalid email address"),
+    email: z.email("Invalid email address"),
     /** User's password - cannot be empty */
     password: z.string().min(1, "Password is required"),
 });
