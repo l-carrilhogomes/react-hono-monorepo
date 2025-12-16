@@ -5,3 +5,5 @@
  * Import from "@repo/dtos" rather than individual files.
  */
 export * from "./commentSchema";
+export * from "./authSchema";
+
