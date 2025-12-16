@@ -69,6 +69,19 @@ app.notFound((c) => {
 });
 
 /**
+ * Health check endpoint.
+ * 
+ * Returns service status for monitoring and load balancer health checks.
+ */
+app.get("/health", (c) => {
+  return c.json({
+    status: "ok",
+    timestamp: new Date().toISOString(),
+    uptime: process.uptime(),
+  });
+});
+
+/**
  * Mount feature modules.
  * 
  * - /api/auth/* - Better Auth authentication endpoints
