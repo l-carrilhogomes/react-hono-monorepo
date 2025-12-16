@@ -116,10 +116,11 @@ This boilerplate includes a complete authentication system powered by [Better Au
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
-| `/api/auth/sign-up/email` | POST | Register new user |
-| `/api/auth/sign-in/email` | POST | Sign in with email/password |
-| `/api/auth/sign-out` | POST | Sign out |
-| `/api/auth/session` | GET | Get current session |
+| `/api/v1/auth/sign-up/email` | POST | Register new user |
+| `/api/v1/auth/sign-in/email` | POST | Sign in with email/password |
+| `/api/v1/auth/sign-out` | POST | Sign out |
+| `/api/v1/auth/session` | GET | Get current session |
+| `/health` | GET | Health check endpoint |
 
 ### Frontend Routes
 
@@ -177,14 +178,19 @@ boilerplate-hono-react/
 │           ├── routes/       # File-based routes (TanStack Router)
 │           └── lib/          # Auth client, API client
 ├── packages/
+│   ├── config/       # Shared ESLint and TypeScript configs
 │   └── dtos/         # Shared DTOs and Zod schemas
 └── package.json      # Root workspace configuration
 ```
 
 ## Roadmap
 
-- [ ] **Testing** - Add a testing framework (Vitest for unit tests, Playwright for E2E)
-- [x] **Authentication** - Integrate [Better Auth](https://better-auth.com/) for secure authentication
+- [x] **Testing** - Vitest configured for unit testing
+- [x] **Authentication** - Better Auth integration
+- [x] **API Versioning** - Routes prefixed with `/api/v1/`
+- [x] **Docker** - Production Dockerfiles for API and web
+- [x] **Dev Tools** - Husky + lint-staged for pre-commit hooks
+- [ ] **E2E Testing** - Add Playwright for end-to-end tests
 
 ## License
 
