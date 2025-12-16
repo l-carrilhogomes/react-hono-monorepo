@@ -14,7 +14,7 @@ function CommentDetailPage(): JSX.Element {
     const { data: comment, isLoading, isError } = useQuery({
         queryKey: ["comment", id],
         queryFn: async () => {
-            const response = await client.comments[":id"].$get({
+            const response = await client.comment[":id"].$get({
                 param: { id },
             });
             if (response.status === 404) {

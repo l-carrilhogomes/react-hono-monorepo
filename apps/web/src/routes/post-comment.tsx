@@ -27,7 +27,7 @@ function RouteComponent(): JSX.Element {
 
   const mutation = useMutation({
     mutationFn: async (data: CreateCommentDto) => {
-      const response = await client.comments.$post({ json: data });
+      const response = await client.comment.$post({ json: data });
       if (!response.ok) {
         throw new Error("Erreur lors de l'envoi du commentaire");
       }
@@ -43,14 +43,9 @@ function RouteComponent(): JSX.Element {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-    >
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div className="flex flex-col items-center gap-2 w-full mt-10">
-        <InputText
-          label="Ton commentaire"
-          {...register("content")}
-        />
+        <InputText label="Ton commentaire" {...register("content")} />
         {errors.content && (
           <p className="text-red-500 text-sm mt-1">{errors.content.message}</p>
         )}
@@ -63,7 +58,9 @@ function RouteComponent(): JSX.Element {
 
       <div className="flex flex-col items-center gap-2 w-full mt-10">
         {mutation.isSuccess && (
-          <p className="text-green-500 text-sm">Commentaire envoyé avec succès!</p>
+          <p className="text-green-500 text-sm">
+            Commentaire envoyé avec succès!
+          </p>
         )}
 
         {mutation.isError && (

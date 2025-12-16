@@ -17,7 +17,7 @@ const app = new Hono();
 app.use("/*", cors());
 
 // Mount feature modules - add new routes here as the API grows
-const routes = app.route("/comments", commentsRoute);
+const routes = app.route("/comment", commentsRoute);
 
 /**
  * Exported type representing the full API route structure.
