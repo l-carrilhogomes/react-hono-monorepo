@@ -18,13 +18,13 @@ const app = new Hono();
  * CORS configuration for authentication.
  * 
  * credentials: true - Required for Better Auth to send/receive cookies
- * origin - Must match the frontend origin exactly
+ * origin - Must match the frontend origin exactly (from env)
  * allowHeaders - Required headers for auth requests
  */
 app.use(
   "/*",
   cors({
-    origin: "http://localhost:5173",
+    origin: process.env.FRONTEND_URL || "http://localhost:5173",
     allowHeaders: ["Content-Type", "Authorization"],
     allowMethods: ["POST", "GET", "OPTIONS"],
     exposeHeaders: ["Content-Length"],
