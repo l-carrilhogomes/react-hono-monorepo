@@ -75,7 +75,7 @@ export function RegisterForm({ onSuccess }: RegisterFormProps) {
                 setError(result.error.message || "Registration failed");
             } else {
                 onSuccess?.();
-                navigate({ to: "/" });
+                navigate({ to: "/dashboard" });
             }
         } catch (err) {
             setError(err instanceof Error ? err.message : "An error occurred");

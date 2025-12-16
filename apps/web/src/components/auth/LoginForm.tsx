@@ -73,7 +73,7 @@ export function LoginForm({ onSuccess }: LoginFormProps) {
                 setError(result.error.message || "Login failed");
             } else {
                 onSuccess?.();
-                navigate({ to: "/" });
+                navigate({ to: "/dashboard" });
             }
         } catch (err) {
             setError(err instanceof Error ? err.message : "An error occurred");
