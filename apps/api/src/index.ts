@@ -84,12 +84,12 @@ app.get("/health", (c) => {
 /**
  * Mount feature modules.
  * 
- * - /api/auth/* - Better Auth authentication endpoints
- * - /comment/*  - Comment CRUD operations
+ * - /api/v1/auth/* - Better Auth authentication endpoints
+ * - /api/v1/comment/* - Comment CRUD operations
  */
 const routes = app
-  .route("/api/auth", authRoute)
-  .route("/comment", commentsRoute);
+  .route("/api/v1/auth", authRoute)
+  .route("/api/v1/comment", commentsRoute);
 
 /**
  * Exported type representing the full API route structure.
