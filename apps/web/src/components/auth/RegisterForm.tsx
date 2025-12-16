@@ -3,6 +3,7 @@
  *
  * Reusable registration form that handles user sign up.
  * Uses react-hook-form for form state and validation with Zod schemas.
+ * Uses existing UI components (Button, InputText) from components/ui.
  *
  * @module components/auth/RegisterForm
  */
@@ -12,6 +13,8 @@ import { SignUpSchema, type SignUpDto } from "@repo/dtos";
 import { authClient } from "../../lib/auth-client";
 import { useState } from "react";
 import { useNavigate } from "@tanstack/react-router";
+import InputText from "../ui/InputText";
+import Button from "../ui/Button";
 
 /**
  * Props for the RegisterForm component.
@@ -85,9 +88,8 @@ export function RegisterForm({ onSuccess }: RegisterFormProps) {
         <form onSubmit={handleSubmit(onSubmit)}>
             {/* Name field */}
             <div>
-                <label htmlFor="name">Name</label>
-                <input
-                    id="name"
+                <InputText
+                    label="Name"
                     type="text"
                     placeholder="Your name"
                     {...register("name")}
@@ -97,9 +99,8 @@ export function RegisterForm({ onSuccess }: RegisterFormProps) {
 
             {/* Email field */}
             <div>
-                <label htmlFor="email">Email</label>
-                <input
-                    id="email"
+                <InputText
+                    label="Email"
                     type="email"
                     placeholder="your@email.com"
                     {...register("email")}
@@ -109,9 +110,8 @@ export function RegisterForm({ onSuccess }: RegisterFormProps) {
 
             {/* Password field */}
             <div>
-                <label htmlFor="password">Password</label>
-                <input
-                    id="password"
+                <InputText
+                    label="Password"
                     type="password"
                     placeholder="••••••••"
                     {...register("password")}
@@ -123,9 +123,11 @@ export function RegisterForm({ onSuccess }: RegisterFormProps) {
             {error && <div>{error}</div>}
 
             {/* Submit button */}
-            <button type="submit" disabled={isLoading}>
-                {isLoading ? "Creating account..." : "Sign Up"}
-            </button>
+            <Button
+                label={isLoading ? "Creating account..." : "Sign Up"}
+                disabled={isLoading}
+                type="submit"
+            />
         </form>
     );
 }
