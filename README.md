@@ -13,6 +13,7 @@ A modern full-stack monorepo boilerplate using Hono for the API and React for th
 - **Hono** - Ultrafast web framework for the edge
 - **Prisma** - Next-generation ORM for Node.js and TypeScript
 - **PostgreSQL** - Relational database (via `pg` driver)
+- **Better Auth** - Authentication library with Prisma adapter
 - **Zod** - TypeScript-first schema validation
 
 ### Web (`apps/web`)
@@ -22,6 +23,7 @@ A modern full-stack monorepo boilerplate using Hono for the API and React for th
 - **Tailwind CSS 4** - Utility-first CSS framework
 - **Vite** - Next-generation frontend build tool
 - **React Hook Form** - Performant form handling
+- **Better Auth** - Authentication client with React hooks
 
 ### Shared Packages
 - **@repo/dtos** - Shared Data Transfer Objects and Zod schemas
@@ -60,13 +62,6 @@ docker compose down -v
 | Password | `password` |
 | Database | `boilerplate_db` |
 
-Your `apps/api/.env` should contain:
-```env
-DATABASE_URL="postgresql://postgres:password@localhost:5432/boilerplate_db"
-```
-
-> **Note:** If you already have PostgreSQL installed locally or prefer a different setup, you can skip Docker and configure your own database connection in the `.env` file.
-
 ### Installation
 
 ```bash
@@ -75,7 +70,7 @@ bun install
 
 # Set up environment variables
 cp apps/api/.env.example apps/api/.env
-# Edit .env with your database credentials
+# Edit .env with your database credentials and generate a secret
 ```
 
 ### Database Setup
@@ -85,8 +80,8 @@ cp apps/api/.env.example apps/api/.env
 cd apps/api
 bunx prisma generate
 
-# Run migrations
-bunx prisma migrate dev
+# Push schema to database
+bunx prisma db push
 ```
 
 ### Development
@@ -107,6 +102,64 @@ cd apps/web && bun run dev   # Web on http://localhost:5173
 bun run build
 ```
 
+## Authentication
+
+This boilerplate includes a complete authentication system powered by [Better Auth](https://better-auth.com/).
+
+### Features
+- Email/password sign up and sign in
+- Session management with secure cookies
+- Protected routes (frontend and API)
+- Type-safe authentication across the stack
+
+### API Endpoints
+
+| Endpoint | Method | Description |
+|----------|--------|-------------|
+| `/api/auth/sign-up/email` | POST | Register new user |
+| `/api/auth/sign-in/email` | POST | Sign in with email/password |
+| `/api/auth/sign-out` | POST | Sign out |
+| `/api/auth/session` | GET | Get current session |
+
+### Frontend Routes
+
+| Route | Description |
+|-------|-------------|
+| `/login` | Login page |
+| `/register` | Registration page |
+| `/dashboard` | Protected dashboard (requires auth) |
+
+### Protecting Routes
+
+Use the `ProtectedRoute` component to protect any page:
+
+```tsx
+import { ProtectedRoute } from "../components/auth/ProtectedRoute";
+
+function MyProtectedPage() {
+  return (
+    <ProtectedRoute>
+      <div>This content requires authentication</div>
+    </ProtectedRoute>
+  );
+}
+```
+
+### Using Session Data
+
+```tsx
+import { authClient } from "../lib/auth-client";
+
+function MyComponent() {
+  const { data: session, isPending } = authClient.useSession();
+
+  if (isPending) return <div>Loading...</div>;
+  if (!session) return <div>Not authenticated</div>;
+
+  return <div>Welcome, {session.user.name}!</div>;
+}
+```
+
 ## Project Structure
 
 ```
@@ -114,13 +167,15 @@ boilerplate-hono-react/
 ├── apps/
 │   ├── api/          # Hono backend API
 │   │   ├── src/
-│   │   │   ├── modules/      # Feature modules (e.g., comment)
+│   │   │   ├── lib/          # Auth config, Prisma client
+│   │   │   ├── modules/      # Feature modules (auth, comment)
 │   │   │   └── index.ts      # API entry point
-│   │   └── prisma/           # Database schema and migrations
+│   │   └── prisma/           # Database schema
 │   └── web/          # React frontend
 │       └── src/
+│           ├── components/   # UI and auth components
 │           ├── routes/       # File-based routes (TanStack Router)
-│           └── lib/          # Utilities and API client
+│           └── lib/          # Auth client, API client
 ├── packages/
 │   └── dtos/         # Shared DTOs and Zod schemas
 └── package.json      # Root workspace configuration
@@ -129,8 +184,9 @@ boilerplate-hono-react/
 ## Roadmap
 
 - [ ] **Testing** - Add a testing framework (Vitest for unit tests, Playwright for E2E)
-- [ ] **Authentication** - Integrate [Better Auth](https://better-auth.com/) for secure authentication
+- [x] **Authentication** - Integrate [Better Auth](https://better-auth.com/) for secure authentication
 
 ## License
 
 MIT
+
