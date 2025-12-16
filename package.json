@@ -4,14 +4,27 @@
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
-    "lint": "turbo run lint"
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "prepare": "husky"
   },
   "devDependencies": {
+    "husky": "^9.0.0",
+    "lint-staged": "^15.2.0",
     "prettier": "^3.7.4",
     "turbo": "^2.6.3",
     "typescript": "5.9.2",
     "vite": "^7.3.0",
+    "vitest": "^4.0.16",
     "rollup": "^4.53.4"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "prettier --write"
+    ],
+    "*.{json,md}": [
+      "prettier --write"
+    ]
   },
   "engines": {
     "node": ">=18"

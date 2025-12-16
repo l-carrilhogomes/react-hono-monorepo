@@ -43,3 +43,6 @@ prisma/*.db-journal
 
 generated/
 bun.lock
+
+test-results/
+playwright-report/

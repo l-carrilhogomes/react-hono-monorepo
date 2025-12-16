@@ -33,7 +33,7 @@ export const auth = betterAuth({
      * Trusted origins for CORS.
      * These domains are allowed to make authentication requests.
      */
-    trustedOrigins: ["http://localhost:5173"],
+    trustedOrigins: [process.env.FRONTEND_URL || "http://localhost:5173"],
 
     /**
      * Email/password authentication configuration.

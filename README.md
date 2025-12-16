@@ -5,11 +5,13 @@ A modern full-stack monorepo boilerplate using Hono for the API and React for th
 ## Tech Stack
 
 ### Monorepo & Build Tools
+
 - **Bun** - Fast JavaScript runtime and package manager
 - **Turborepo** - High-performance build system for monorepos
 - **TypeScript** - Type-safe JavaScript
 
 ### API (`apps/api`)
+
 - **Hono** - Ultrafast web framework for the edge
 - **Prisma** - Next-generation ORM for Node.js and TypeScript
 - **PostgreSQL** - Relational database (via `pg` driver)
@@ -17,6 +19,7 @@ A modern full-stack monorepo boilerplate using Hono for the API and React for th
 - **Zod** - TypeScript-first schema validation
 
 ### Web (`apps/web`)
+
 - **React 19** - UI library
 - **TanStack Router** - File-based routing with full type safety
 - **TanStack Query** - Powerful data fetching and caching
@@ -26,11 +29,13 @@ A modern full-stack monorepo boilerplate using Hono for the API and React for th
 - **Better Auth** - Authentication client with React hooks
 
 ### Shared Packages
+
 - **@repo/dtos** - Shared Data Transfer Objects and Zod schemas
 
 ## Getting Started
 
 ### Prerequisites
+
 - [Bun](https://bun.sh/) >= 1.3.4
 - [Node.js](https://nodejs.org/) >= 18
 - [Docker](https://www.docker.com/) (optional, for local PostgreSQL)
@@ -102,11 +107,48 @@ cd apps/web && bun run dev   # Web on http://localhost:5173
 bun run build
 ```
 
+## Testing
+
+The boilerplate includes a complete testing setup with unit tests and E2E tests.
+
+### API Tests (Vitest)
+
+```bash
+# Run API unit tests
+cd apps/api
+bun run test
+
+# Run tests in watch mode
+bun run test --watch
+```
+
+### E2E Tests (Playwright)
+
+```bash
+# Run E2E tests
+cd apps/web
+bun run test:e2e
+
+# Run tests with UI
+bunx playwright test --ui
+
+# Show last test report
+bunx playwright show-report
+```
+
+### Run All Tests
+
+```bash
+# From root directory
+bun run test
+```
+
 ## Authentication
 
 This boilerplate includes a complete authentication system powered by [Better Auth](https://better-auth.com/).
 
 ### Features
+
 - Email/password sign up and sign in
 - Session management with secure cookies
 - Protected routes (frontend and API)
@@ -114,19 +156,20 @@ This boilerplate includes a complete authentication system powered by [Better Au
 
 ### API Endpoints
 
-| Endpoint | Method | Description |
-|----------|--------|-------------|
-| `/api/auth/sign-up/email` | POST | Register new user |
-| `/api/auth/sign-in/email` | POST | Sign in with email/password |
-| `/api/auth/sign-out` | POST | Sign out |
-| `/api/auth/session` | GET | Get current session |
+| Endpoint                     | Method | Description                 |
+| ---------------------------- | ------ | --------------------------- |
+| `/api/v1/auth/sign-up/email` | POST   | Register new user           |
+| `/api/v1/auth/sign-in/email` | POST   | Sign in with email/password |
+| `/api/v1/auth/sign-out`      | POST   | Sign out                    |
+| `/api/v1/auth/session`       | GET    | Get current session         |
+| `/health`                    | GET    | Health check endpoint       |
 
 ### Frontend Routes
 
-| Route | Description |
-|-------|-------------|
-| `/login` | Login page |
-| `/register` | Registration page |
+| Route        | Description                         |
+| ------------ | ----------------------------------- |
+| `/login`     | Login page                          |
+| `/register`  | Registration page                   |
 | `/dashboard` | Protected dashboard (requires auth) |
 
 ### Protecting Routes
@@ -177,16 +220,21 @@ boilerplate-hono-react/
 │           ├── routes/       # File-based routes (TanStack Router)
 │           └── lib/          # Auth client, API client
 ├── packages/
+│   ├── config/       # Shared ESLint and TypeScript configs
 │   └── dtos/         # Shared DTOs and Zod schemas
+├── vitest.config.ts  # Root test configuration
 └── package.json      # Root workspace configuration
 ```
 
 ## Roadmap
 
-- [ ] **Testing** - Add a testing framework (Vitest for unit tests, Playwright for E2E)
-- [x] **Authentication** - Integrate [Better Auth](https://better-auth.com/) for secure authentication
+- [x] **Testing** - Vitest for unit tests, Playwright for E2E tests
+- [x] **Authentication** - Better Auth integration
+- [x] **API Versioning** - Routes prefixed with `/api/v1/`
+- [x] **Docker** - Production Dockerfiles for API and web
+- [x] **Dev Tools** - Husky + lint-staged for pre-commit hooks
+- [x] **E2E Testing** - Playwright configured with full test suite
 
 ## License
 
 MIT
-
