@@ -34,6 +34,40 @@ app.use(
 );
 
 /**
+ * Global error handler.
+ * 
+ * Catches all unhandled errors and returns a structured JSON response.
+ * In development, includes the error message; in production, hides details.
+ */
+app.onError((err, c) => {
+  console.error(`[API Error] ${err.message}`, err.stack);
+
+  const isDev = process.env.NODE_ENV !== "production";
+
+  return c.json(
+    {
+      error: "Internal Server Error",
+      message: isDev ? err.message : "An unexpected error occurred",
+      ...(isDev && { stack: err.stack }),
+    },
+    500
+  );
+});
+
+/**
+ * 404 Not Found handler.
+ */
+app.notFound((c) => {
+  return c.json(
+    {
+      error: "Not Found",
+      message: `Route ${c.req.path} not found`,
+    },
+    404
+  );
+});
+
+/**
  * Mount feature modules.
  * 
  * - /api/auth/* - Better Auth authentication endpoints
@@ -54,4 +88,3 @@ export default {
   port: 3000,
   fetch: app.fetch,
 };
-
